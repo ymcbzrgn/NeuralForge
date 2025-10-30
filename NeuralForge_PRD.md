@@ -895,12 +895,16 @@ Required:
 ├── Java 21+
 ├── Python 3.10+ (model conversion)
 ├── Git
-└── 16GB RAM (for building)
+└── 16GB RAM (for building desktop app)
 
 Optional:
 ├── CUDA Toolkit (GPU acceleration)
-├── Docker (containerized build)
 └── VS Code (dogfooding)
+
+NOT Used:
+├── Docker (not needed - desktop app)
+├── Kubernetes (not needed - desktop app)
+└── Web servers (not needed - desktop app)
 ```
 
 ---

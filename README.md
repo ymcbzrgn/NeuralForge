@@ -1,5 +1,7 @@
 # 🚀 NeuralForge
 
+**A Desktop AI Code Editor** - Like Cursor or VS Code, but 100% local and privacy-first.
+
 <div align="center">
   
   ![NeuralForge Banner](https://via.placeholder.com/1200x400/1e1e1e/00ff00?text=NeuralForge+-+Your+Local+AI+Pair+Programmer)

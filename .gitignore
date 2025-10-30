@@ -142,3 +142,6 @@ ssl/
 NOTES.md
 TODO_LOCAL.md
 CREDENTIALS.md
+CLAUDE_OLD.md
+.github/copilot-instructions.md
+.github/copilot-instructions-old.md

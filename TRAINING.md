@@ -603,12 +603,12 @@ neuralforge ab-test \
 
 ## What it does
 - Understands Spring annotations
-- Follows REST conventions
+- Follows Spring Boot conventions
 - Generates proper error handling
 
 ## Best for
-- Microservices development
-- REST API creation
+- Backend service development
+- Spring Boot applications
 - Spring Data repositories
 
 ## Training data

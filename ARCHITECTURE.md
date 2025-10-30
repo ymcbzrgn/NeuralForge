@@ -679,12 +679,11 @@ public class MetricsCollector {
 
 ### Health Checks
 ```java
-@RestController
-public class HealthController {
+@Component
+public class HealthMonitor {
     
-    @GetMapping("/health")
-    public Health health() {
-        return Health.builder()
+    public HealthStatus checkHealth() {
+        return HealthStatus.builder()
             .withDetail("models", modelHealth())
             .withDetail("memory", memoryHealth())
             .withDetail("inference", inferenceHealth())
@@ -692,6 +691,8 @@ public class HealthController {
     }
 }
 ```
+
+**Note**: Health checks are internal monitoring, not exposed as REST endpoints. This is a desktop application.
 
 ---
 
