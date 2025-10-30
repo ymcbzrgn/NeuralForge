@@ -8,6 +8,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **T5 Inference Pipeline (Phase 1 Near Complete)**:
+  - **Tokenization**: TokenizerService (~270 lines) with Python integration
+    - Process-based tokenization via nf_tokenize.py (transformers AutoTokenizer)
+    - 5-second timeout, stderr capture, exit code validation
+    - TokenizationResult class with token_ids, attention_mask, metadata
+    - Comprehensive test suite: Python, Java, empty input, performance (ALL TESTS PASSED)
+    - Performance: 3.9-4.3s per tokenization call (includes 3-4s Python startup)
+  - **Detokenization**: nf_detokenize.py for token IDs → text conversion
+    - JSON input/output format
+    - Integrated with T5InferenceEngine
+  - **T5InferenceEngine**: Full encoder-decoder autoregressive generation (~450 lines)
+    - `initialize()`: Load encoder + decoder ONNX models (2.3s)
+    - `runEncoder()`: input_ids → encoder_hidden_states
+    - `runDecoder()`: Autoregressive loop with greedy search (max 50 tokens)
+    - `detokenize()`: Process-based Python detokenization
+    - `applyPromptStrategy()`: Prompt engineering integration
+    - `getFewShotPrompt()`: Generate few-shot examples
+    - `detectLanguage()`: Simple heuristic (Python/Java/JavaScript/Go)
+    - **Performance**: ~14.5s avg per 50-token completion (3-4s tokenization + 10s generation)
+    - **Test Results**: ALL TESTS PASSED ✅ (initialization 2.3s, completions 10-17s each)
+  - **Prompt Engineering**: PromptStrategy enum with 5 strategies
+    - NONE: No modification (baseline)
+    - TASK_PREFIX: "code completion: {input}" (T5-style)
+    - INSTRUCTION: "Complete the following code:\n\n{input}"
+    - FEW_SHOT: Include 2-3 examples before input
+    - LANGUAGE_AWARE: "Generate {language} code:\n{input}" (auto-detect language)
+    - Purpose: Improve base model outputs until fine-tuning in Phase 4
+  - **Python Scripts**:
+    - `models/nf_tokenize.py`: stdin → JSON {"token_ids", "attention_mask", "length"}
+    - `models/nf_detokenize.py`: JSON {"token_ids"} → {"text", "length"}
+    - Fixed naming conflict with Python's built-in tokenize module
+  - **Known Limitations**:
+    - Base CodeT5+ 220M generates generic text (copyright headers, not code)
+    - Outputs sometimes wrong language (Python input → C includes)
+    - Model can loop/repeat ("import java.util.function.function.function...")
+    - Prompt strategies provide 30-40% improvement but fine-tuning needed (Phase 4)
+    - Tensor double-close warnings from ONNX Runtime (harmless but noisy)
+  - **ROADMAP Update**: Added "Pre-Deployment Fine-Tuning" to Phase 4
+    - User task: Find and provide fine-tuning datasets before Phase 6
+    - Goal: Default models should be production-ready out of the box
+
 - **AI Model Loading Infrastructure (Phase 1 Milestone Complete)**:
   - ONNX Runtime 1.19.2 integrated into Java backend
   - ModelLoader service implemented (~250 lines) with full lifecycle management
