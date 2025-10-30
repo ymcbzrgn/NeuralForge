@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NeuralForge</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 40px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4ec9b0;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #858585;
+            margin-bottom: 40px;
+        }
+        .status {
+            background: #252526;
+            border: 1px solid #3e3e42;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #2d2d30;
+            border-radius: 4px;
+        }
+        .status-label {
+            color: #9cdcfe;
+        }
+        .status-value {
+            font-weight: bold;
+        }
+        .status-value.success {
+            color: #4ec9b0;
+        }
+        .status-value.pending {
+            color: #ce9178;
+        }
+        .test-button {
+            background: #0e639c;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .test-button:hover {
+            background: #1177bb;
+        }
+        .test-button:active {
+            background: #0d5a8f;
+        }
+        .log {
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-left: 3px solid #4ec9b0;
+            padding-left: 10px;
+        }
+        .log-entry.error {
+            border-left-color: #f48771;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 NeuralForge</h1>
+        <p class="subtitle">Desktop AI Code Editor - Initial Setup Test</p>
+        
+        <div class="status">
+            <div class="status-item">
+                <span class="status-label">Backend Status:</span>
+                <span class="status-value pending" id="backend-status">Connecting...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">IPC Connection:</span>
+                <span class="status-value pending" id="ipc-status">Not tested</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Memory Usage:</span>
+                <span class="status-value" id="memory-status">--</span>
+            </div>
+        </div>
+        
+        <div>
+            <button class="test-button" onclick="testPing()">Test Ping</button>
+            <button class="test-button" onclick="testStatus()">Get Status</button>
+            <button class="test-button" onclick="clearLog()">Clear Log</button>
+        </div>
+        
+        <div class="log" id="log"></div>
+    </div>
+    
+    <script>
+        const { ipcRenderer } = require('electron');
+        
+        // Listen for backend messages
+        ipcRenderer.on('backend-message', (event, message) => {
+            log('Received: ' + JSON.stringify(message, null, 2));
+            
+            if (message.type === 'pong') {
+                document.getElementById('backend-status').textContent = 'Connected ✓';
+                document.getElementById('backend-status').className = 'status-value success';
+                document.getElementById('ipc-status').textContent = 'Working ✓';
+                document.getElementById('ipc-status').className = 'status-value success';
+            }
+            
+            if (message.type === 'status') {
+                const memoryMB = message.memoryMB || 0;
+                const freeMB = message.freeMB || 0;
+                const usedMB = memoryMB - freeMB;
+                document.getElementById('memory-status').textContent = 
+                    `${usedMB}MB used / ${memoryMB}MB total`;
+            }
+        });
+        
+        function testPing() {
+            log('Sending ping...');
+            // This will be handled by main process
+            // For now, just log (full integration in next step)
+        }
+        
+        function testStatus() {
+            log('Requesting status...');
+        }
+        
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        // Initial log
+        log('NeuralForge initialized');
+        log('Waiting for backend connection...');
+    </script>
+</body>
+</html>
