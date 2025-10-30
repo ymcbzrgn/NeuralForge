@@ -19,14 +19,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **ROADMAP.md**: Flexible, phase-based development roadmap
+- **ROADMAP.md**: Flexible, phase-based development roadmap (local only)
   - High-level vision and goals without strict timelines
   - 6 main phases: Foundation → Model Management → Context → LoRA → Advanced Features → Distribution
+  - Phase 1 updated with completed tasks (✅ Electron, Backend, IPC, KISS principles)
   - Future/experimental ideas section for exploration
   - Key constraints and flexibility notes emphasizing adaptability
+  - Status: Skeleton complete, ready for model integration (NEXT: model loading)
   - Added to .gitignore (internal planning document)
+- **oldDocs/ directory**: Archive location for old documentation
+  - Created for CLAUDE_OLD.md and future archived files
+  - Excluded from git tracking via .gitignore
 
 ### Changed
+- **Repository Cleanup (GitHub Structure)**:
+  - Removed `CLAUDE.md` from git tracking (kept locally for AI development)
+  - Removed `TEST_RESULTS.md` from git tracking (kept locally for testing docs)
+  - Removed `.github/copilot-instructions.md` from git tracking (AI instructions local only)
+  - Moved `CLAUDE_OLD.md` → `oldDocs/` directory
+  - All files remain accessible locally, just not pushed to GitHub
+- **Enhanced .gitignore rules**:
+  - AI Development Guides: `CLAUDE.md`, `.github/copilot-instructions*.md`
+  - Internal Documentation: `ROADMAP.md`, `TEST_RESULTS.md`, `ENVIRONMENT.md`, `NOTES.md`
+  - Old/Archived: `oldDocs/` directory
+  - Codacy config: `.codacy/` directory
+  - Pattern-based exclusions: `DRAFT*.md`, `WIP*.md`, `*_INTERNAL.md`
+  - Focus: Keep GitHub clean, only public-facing documentation visible
+- **ROADMAP.md Phase 1 Status**: Updated with all completed tasks
+  - All skeleton components marked complete (✅)
+  - Backend: 258MB memory, ping/pong working
+  - IPC: stdin/stdout JSON verified
+  - Next tasks: Model loading and basic completion
+
+### Fixed
 - **CRITICAL RULES ADDED**: Updated documentation with mandatory workflow rules
   - Rule #0: Always fix issues first (BLOCKING - no progress with unresolved issues)
   - Rule #1: Update CHANGELOG before every commit (MANDATORY)
