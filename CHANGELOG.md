@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Backend**: Spring Boot application with real IPC handler (`dev.neuralforge` package)
+  - `Application.java`: Main entry point with memory logging
+  - `IPCHandler.java`: Real stdin/stdout JSON communication (NO MOCKS!)
+  - Ping/pong and status endpoints working
+  - Build successful: 13.2MB JAR, 2s compile time, 254MB RAM usage
+- **Editor**: Electron app structure
+  - `main.cjs`: Process spawning and IPC management
+  - `index.html`: Test UI for backend communication
+  - Electron 28.0.0 installed and configured
+- **Models**: Directory structure and documentation
+  - `models/README.md`: Model loading strategy and memory budgets
+  - `models/base/`: Placeholder for ONNX models
+- **Environment**: Full development setup documented in `ENVIRONMENT.md`
+  - Java 21.0.9, Node.js 22.20.0, npm 10.9.3, Gradle 9.2.0
+- **Testing**: `TEST_RESULTS.md` with manual IPC verification
+
+### Fixed
+- Spring Boot 3.x Banner.Mode import corrected
+
+### Known Issues
+- Electron crashes with SIGTRAP on macOS (backend IPC proven working standalone)
+
 ### Changed
 - **Major Overhaul**: Completely rewrote `.github/copilot-instructions.md` for GitHub Copilot optimization
   - Added quick reference tables and visual tech stack diagram

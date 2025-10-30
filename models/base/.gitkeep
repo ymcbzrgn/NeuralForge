@@ -1,0 +1,7 @@
+# Base Models Directory
+
+Pre-trained ONNX models will be placed here.
+
+Models are NOT committed to git due to size (models/*.onnx is in .gitignore).
+
+Download instructions: TBD
