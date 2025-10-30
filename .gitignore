@@ -165,3 +165,6 @@ WIP*.md
 
 # Old/Archived Documentation
 oldDocs/
+
+# Codacy configuration
+.codacy/
