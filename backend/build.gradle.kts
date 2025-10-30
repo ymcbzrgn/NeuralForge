@@ -24,6 +24,9 @@ dependencies {
     // JSON Processing for IPC
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
     
+    // ONNX Runtime for AI model inference
+    implementation("com.microsoft.onnxruntime:onnxruntime:1.19.2")
+    
     // Logging
     implementation("ch.qos.logback:logback-classic")
     
@@ -45,4 +48,11 @@ tasks.withType<JavaCompile> {
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     archiveFileName.set("neuralforge-backend.jar")
     mainClass.set("dev.neuralforge.Application")
+}
+
+// Task to print classpath for testing
+tasks.register("printClasspath") {
+    doLast {
+        println(configurations.runtimeClasspath.get().asPath)
+    }
 }
