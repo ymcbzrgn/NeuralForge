@@ -1,12 +1,15 @@
 # 🏗️ NeuralForge Architecture
 
+**Status**: Early Planning Phase
+
+This document describes the planned architecture for NeuralForge. These designs represent our vision and are subject to change as development progresses.
+
 ## Table of Contents
 - [Overview](#overview)
 - [System Architecture](#system-architecture)
 - [Component Design](#component-design)
 - [Data Flow](#data-flow)
 - [Model Serving Architecture](#model-serving-architecture)
-- [Learning Pipeline](#learning-pipeline)
 - [Performance Optimizations](#performance-optimizations)
 - [Security Architecture](#security-architecture)
 - [Deployment Architecture](#deployment-architecture)
@@ -15,7 +18,7 @@
 
 ## Overview
 
-NeuralForge is architected as a **three-layer system**:
+NeuralForge is planned as a **three-layer system**:
 1. **Presentation Layer**: VS Code fork (Electron + Monaco)
 2. **Service Layer**: Java Spring Boot backend with embedded AI engine
 3. **Model Layer**: ONNX-based inference with LoRA adapters
@@ -379,7 +382,11 @@ public class AdapterStack {
 
 ## Learning Pipeline
 
-### Incremental Learning Architecture
+**Status**: Planned Feature
+
+The incremental learning system is a key planned feature that will allow NeuralForge to adapt to individual coding styles. This section describes the intended design.
+
+### Planned Incremental Learning Architecture
 ```java
 @Component
 public class IncrementalLearner {
@@ -690,12 +697,16 @@ public class HealthController {
 
 ## Future Considerations
 
-### Scaling Path
-1. **WebAssembly Support**: Compile models to WASM
-2. **GPU Acceleration**: CUDA/Metal/ROCm backends
-3. **Distributed Training**: Federated learning network
-4. **Cloud Hybrid**: Optional cloud for heavy tasks
-5. **Mobile Support**: VSCode.dev integration
+### Planned Advanced Features
+
+These features are on the roadmap for future development:
+
+1. **Incremental Learning**: Real-time model adaptation from user feedback
+2. **Swarm Intelligence**: Multiple model consensus mechanisms
+3. **Time Travel Debugging**: Pattern-based bug prediction from history
+4. **Federated Learning**: Privacy-preserving community improvements
+5. **WebAssembly Support**: Compile models to WASM for portability
+6. **GPU Acceleration**: CUDA/Metal/ROCm backend support
 
 ### Extension Points
 - Custom model loaders
@@ -706,4 +717,4 @@ public class HealthController {
 
 ---
 
-*This architecture is designed to be modular, efficient, and privacy-preserving while delivering state-of-the-art AI assistance for coding.*
+*This architecture document describes planned designs for NeuralForge. Implementation status and details may change as development progresses.*

@@ -31,19 +31,15 @@ Tired of sending your code to the cloud? Frustrated with 12GB RAM requirements? 
 - 🆓 **Forever free** - No subscriptions, no limits
 - 🚀 **<50ms latency** - Faster than cloud solutions
 
-## 📊 NeuralForge vs The Competition
+## 🎯 Key Characteristics
 
-| Feature | NeuralForge | Cursor | GitHub Copilot | Tabnine |
-|---------|------------|---------|----------------|---------|
-| **Model Size** | 1GB | 8GB+ | Cloud | 3GB |
-| **RAM Usage** | 3GB | 12GB | N/A | 5GB |
-| **Privacy** | 100% Local | Partial | ❌ Cloud | Partial |
-| **Learning** | ✅ Continuous | ❌ Static | ❌ Static | Limited |
-| **Context Window** | 16,384 tokens | 8,192 | 2,048 | 1,024 |
-| **Fine-tuning** | ✅ Automatic | ❌ | ❌ | ❌ |
-| **Price** | $0 Forever | $20/month | $10/month | $12/month |
-| **Open Source** | ✅ Full | ❌ | ❌ | ❌ |
-| **Offline Mode** | ✅ Full features | Limited | ❌ | Limited |
+| Feature | Description |
+|---------|------------|
+| **Local First** | All processing happens on your machine |
+| **Privacy** | Your code never leaves your computer |
+| **Open Source** | Fully transparent and community-driven |
+| **No Subscriptions** | Free and always will be |
+| **Offline Ready** | Works without internet connection |
 
 ## 🎬 Demo
 
@@ -155,16 +151,7 @@ npm run start
 
 ## 🗺️ Roadmap
 
-- [x] VS Code fork with basic completion
-- [x] Multi-model architecture
-- [ ] Incremental learning system
-- [ ] Git-aware intelligence
-- [ ] Adapter marketplace
-- [ ] Swarm intelligence mode
-- [ ] Time travel debugging
-- [ ] Federated learning
-- [ ] Web assembly support
-- [ ] Cloud-optional sync
+This is an early-stage project. The roadmap will be updated as development progresses. See [ARCHITECTURE.md](ARCHITECTURE.md) and [CONTRIBUTING.md](CONTRIBUTING.md) for current status.
 
 ## 🤝 Contributing
 
@@ -208,37 +195,19 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## 🏆 Community
 
-### Join our Growing Community!
+### Get Involved
 
-- **Discord**: [Join 5000+ developers](https://discord.gg/neuralforge)
-- **Twitter**: [@neuralforge](https://twitter.com/neuralforge)
-- **Reddit**: [r/neuralforge](https://reddit.com/r/neuralforge)
-- **Blog**: [blog.neuralforge.dev](https://blog.neuralforge.dev)
+For questions, discussions, and to connect with other contributors:
+- Check [CONTRIBUTING.md](CONTRIBUTING.md) for how to get involved
+- Review [CLAUDE.md](CLAUDE.md) for architecture details
+- See [ARCHITECTURE.md](ARCHITECTURE.md) for technical overview
 
-### Featured Adapters
-
-| Adapter | Downloads | Rating | Description |
-|---------|-----------|--------|-------------|
-| `spring-boot-pro` | 50K+ | ⭐⭐⭐⭐⭐ | Spring Boot best practices |
-| `react-hooks-master` | 45K+ | ⭐⭐⭐⭐⭐ | Modern React patterns |
-| `rust-safety` | 30K+ | ⭐⭐⭐⭐⭐ | Rust memory safety |
-| `go-concurrency` | 25K+ | ⭐⭐⭐⭐ | Go concurrent patterns |
 
 ## 📊 Benchmarks
 
-<div align="center">
+Performance benchmarks will be published once the project reaches a stable release with reproducible test cases.
 
-| Benchmark | NeuralForge | Cursor | Copilot |
-|-----------|------------|---------|---------|
-| **Code Completion Accuracy** | 89.2% | 87.5% | 91.3% |
-| **Inference Speed** | 45ms | 120ms | 180ms |
-| **Memory Usage** | 2.8GB | 11.5GB | N/A |
-| **Startup Time** | 3.2s | 8.5s | N/A |
-| **Learning Rate** | Continuous | None | None |
 
-*Benchmarks on M2 MacBook Pro, 16GB RAM*
-
-</div>
 
 ## 🔐 Security
 
@@ -259,20 +228,13 @@ NeuralForge is licensed under the **Apache License 2.0** - see [LICENSE](LICENSE
 - Models: Apache 2.0 / MIT only
 - All dependencies: Compatible licenses
 
-## 💖 Sponsors
+## 💖 Support
 
-<div align="center">
+If you find NeuralForge useful, consider:
+- ⭐ [Starring the repository](https://github.com/ymcbzrgn/neuralforge)
+- 📝 Contributing code or documentation
+- 🐛 Reporting bugs and suggesting features
 
-### Platinum Sponsors
-*Your company here* - [Become a sponsor](https://github.com/sponsors/neuralforge)
-
-### Gold Sponsors
-*Your company here*
-
-### Individual Backers
-Thank you to all our backers! 🙏
-
-</div>
 
 ## 🌟 Star History
 
@@ -295,17 +257,17 @@ NeuralForge is built on three principles:
 
 <div align="center">
 
-### Ready to code with an AI that actually learns from you?
+### Ready to explore a local-first AI coding tool?
 
 # [⬇️ Download NeuralForge Now](https://github.com/ymcbzrgn/neuralforge/releases)
 
-**Free Forever • No Account Required • 100% Local**
+**Free and Open Source • Local-First • Community-Driven**
 
 <br>
 
 Made with ❤️ by developers who believe in privacy and local-first AI
 
-[Website](https://neuralforge.dev) • [Documentation](https://docs.neuralforge.dev) • [Report Bug](https://github.com/ymcbzrgn/neuralforge/issues)
+[GitHub](https://github.com/ymcbzrgn/neuralforge) • [Documentation](docs/) • [Report Bug](https://github.com/ymcbzrgn/neuralforge/issues)
 
 </div>
 

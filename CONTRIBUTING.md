@@ -1,6 +1,8 @@
 # Contributing to NeuralForge
 
-First off, **thank you** for considering contributing to NeuralForge! It's people like you that make NeuralForge such a great tool for developers worldwide. 🚀
+First off, **thank you** for considering contributing to NeuralForge! This is an early-stage open-source project and we welcome contributors. 🚀
+
+**Current Status**: Early development phase. Core architecture and documentation are being established.
 
 ## Table of Contents
 - [Code of Conduct](#code-of-conduct)
@@ -12,13 +14,13 @@ First off, **thank you** for considering contributing to NeuralForge! It's peopl
 - [Code Standards](#code-standards)
 - [Testing Requirements](#testing-requirements)
 - [Documentation](#documentation)
-- [Community](#community)
+- [Getting Help](#getting-help)
 
 ---
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to conduct@neuralforge.dev.
+This project follows standard open-source conduct principles. By participating, you are expected to:
 
 ### Our Standards
 - **Respectful** communication
@@ -26,6 +28,8 @@ This project and everyone participating in it is governed by our Code of Conduct
 - **Inclusive** environment
 - **Professional** interactions
 - **Privacy-focused** development
+
+Report unacceptable behavior via GitHub Issues.
 
 ---
 
@@ -492,18 +496,22 @@ npm run submit-adapter -- --public
 
 ---
 
-## Community
+## Getting Help
 
-### Getting Help
-- **Discord**: [discord.gg/neuralforge](https://discord.gg/neuralforge)
-- **Discussions**: [GitHub Discussions](https://github.com/neuralforge/neuralforge/discussions)
-- **Stack Overflow**: Tag `neuralforge`
+### Communication Channels
+
+Since this is an early-stage project, please use:
+
+- **GitHub Issues**: [Report bugs and request features](https://github.com/ymcbzrgn/neuralforge/issues)
+- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/ymcbzrgn/neuralforge/discussions)
+- **Pull Requests**: Code contributions
+
+*Note: Additional community channels will be established as the project grows.*
 
 ### Recognition
 - Contributors get credited in CONTRIBUTORS.md
-- Significant contributors get commit access
-- Adapter creators featured in marketplace
-- Top contributors highlighted in releases
+- Significant contributors will receive recognition in releases
+- All contributions are valued, regardless of size
 
 ### Development Philosophy
 1. **Privacy First**: No telemetry, ever
@@ -525,11 +533,10 @@ By contributing, you agree that your contributions will be licensed under Apache
 Feel free to:
 - Open an issue for bugs
 - Start a discussion for features
-- Join Discord for real-time chat
-- Email maintainers for security issues
+- Email maintainers for security issues (see SECURITY.md)
 
-**Thank you for contributing to making AI-assisted coding accessible to everyone!** 🎉
+**Thank you for considering contributing to NeuralForge!** 🎉
 
 ---
 
-*Remember: Every contribution, no matter how small, makes NeuralForge better for thousands of developers.*
+*Every contribution, no matter how small, helps build a better privacy-focused AI coding assistant.*
