@@ -1,0 +1,147 @@
+# NeuralForge .gitignore
+
+# Build outputs
+/build/
+/dist/
+/out/
+/target/
+*.jar
+*.war
+*.ear
+
+# Node/Electron
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn
+
+# Java
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+hs_err_pid*
+
+# Model files (too large for git)
+*.onnx
+*.bin
+*.pt
+*.safetensors
+*.gguf
+*.ggml
+/models/downloads/
+
+# User data and adapters
+/adapters/user/
+/data/user/
+/workspace/
+*.lora
+*.adapter
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment and config
+.env
+.env.local
+.env.*.local
+config.local.json
+secrets.json
+
+# Logs
+logs/
+*.log
+log/
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+*.test.js.map
+
+# Cache
+.cache/
+.gradle/
+.m2/repository/
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Package files
+*.dmg
+*.exe
+*.deb
+*.rpm
+*.AppImage
+*.msi
+*.pkg
+
+# Temporary files
+*.tmp
+*.temp
+~*
+*~
+
+# Database
+*.db
+*.sqlite
+*.h2.db
+
+# Vector database
+qdrant_data/
+chromadb/
+
+# Python (for model conversion scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.Python
+
+# Security - never commit
+*.key
+*.pem
+*.p12
+*.pfx
+certificates/
+ssl/
+
+# Training data (can be large)
+/datasets/
+/training_data/
+*.jsonl
+*.csv
+!sample.csv
+!example.jsonl
+
+# Backups
+*.backup
+*.bak
+*.old
+
+# Performance profiling
+*.prof
+*.flamegraph
+
+# Never commit these (as per guidelines)
+NOTES.md
+TODO_LOCAL.md
+CREDENTIALS.md
+
+CLAUDE.md
+NeuralForge_PRD.md
