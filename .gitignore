@@ -82,6 +82,12 @@ test-results/
 docs/_build/
 docs/.doctrees/
 
+# Internal/Local Documentation (not for GitHub)
+TEST_RESULTS.md
+ENVIRONMENT.md
+NOTES.md
+TODO_LOCAL.md
+
 # Package files
 *.dmg
 *.exe
@@ -138,11 +144,24 @@ ssl/
 *.prof
 *.flamegraph
 
-# Never commit these (as per guidelines)
-NOTES.md
-TODO_LOCAL.md
-CREDENTIALS.md
+# AI Development Guides (keep local, not for GitHub)
+CLAUDE.md
 CLAUDE_OLD.md
 .github/copilot-instructions.md
 .github/copilot-instructions-old.md
+.github/instructions/codacy.instructions.md
+
+# Internal Development Docs (not for public GitHub)
+NOTES.md
+TODO_LOCAL.md
+CREDENTIALS.md
+TEST_RESULTS.md
 ENVIRONMENT.md
+EXPERIMENTS.md
+ROADMAP.md
+DRAFT*.md
+WIP*.md
+*_INTERNAL.md
+
+# Old/Archived Documentation
+oldDocs/

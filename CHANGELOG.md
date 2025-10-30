@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **CRITICAL**: Electron SIGTRAP crash on macOS resolved
+  - Downgraded from Electron 28.0.0 → 27.3.11 (stable on macOS)
+  - Full integration test successful: Window opens, backend spawns, IPC working
+  - Ping/pong verified: `{"type":"pong","timestamp":...,"message":"Backend is alive!"}`
+- **Backend logging cleanup**: Added `application.properties` to suppress Spring Boot logs
+  - Prevents log output from interfering with JSON IPC on stdout
+  - Clean stdin/stdout communication achieved
+
+## [Unreleased]
+
+### Added
+- **ROADMAP.md**: Flexible, phase-based development roadmap
+  - High-level vision and goals without strict timelines
+  - 6 main phases: Foundation → Model Management → Context → LoRA → Advanced Features → Distribution
+  - Future/experimental ideas section for exploration
+  - Key constraints and flexibility notes emphasizing adaptability
+  - Added to .gitignore (internal planning document)
+
+### Changed
+- **CRITICAL RULES ADDED**: Updated documentation with mandatory workflow rules
+  - Rule #0: Always fix issues first (BLOCKING - no progress with unresolved issues)
+  - Rule #1: Update CHANGELOG before every commit (MANDATORY)
+  - Rule #2: No AI Attribution (never mention Claude/Copilot in commits/code)
+  - Rule #3: KISS First - Keep It Simple, Stupid (HIGHEST PRIORITY coding principle)
+  - Rule #4: Clean Code - Write for humans first, readability over cleverness
+  - Rule #5 (copilot-instructions.md): KISS with concrete examples (over-engineering vs simple)
+  - Rule #6 (copilot-instructions.md): Clean Code with readability checklist
+  - Rule #7 (copilot-instructions.md): Performance is Feature (latency/memory targets)
+  - Added comprehensive KISS and Clean Code sections with examples to both guides
+  - Decision frameworks: "Can I delete code?" > "Can I use built-in features?" > "Add code"
+  - Anti-patterns documented: premature abstraction, over-engineering, clever one-liners
+  - Clean code rules: descriptive names, one function = one job, max 20 lines, no magic numbers
+  - Added to `.github/copilot-instructions.md` and `CLAUDE.md` for consistent AI guidance
+  - Updated pre-commit checklist with correct order (fix issues → update CHANGELOG → commit)
+- **Repository Cleanup**: Internal docs moved to .gitignore
+  - Created `oldDocs/` directory for archived documentation
+  - Moved `CLAUDE_OLD.md` to `oldDocs/`
+  - Updated `.gitignore` with comprehensive internal docs exclusion:
+    - AI development guides: `CLAUDE.md`, `.github/copilot-instructions.md`
+    - Internal docs: `TEST_RESULTS.md`, `ENVIRONMENT.md`, `ROADMAP.md`, `NOTES.md`, etc.
+    - Old/archived files: `oldDocs/` directory
+    - Pattern-based exclusions: `DRAFT*.md`, `WIP*.md`, `*_INTERNAL.md`
+  - Keeps GitHub clean and focused on public-facing documentation
+  - TEST_RESULTS.md unstaged from git (was committed in d204f2f)
+
+### Fixed
+
 ### Added
 - **Backend**: Spring Boot application with real IPC handler (`dev.neuralforge` package)
   - `Application.java`: Main entry point with memory logging
@@ -24,11 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Java 21.0.9, Node.js 22.20.0, npm 10.9.3, Gradle 9.2.0
 - **Testing**: `TEST_RESULTS.md` with manual IPC verification
 
-### Fixed
-- Spring Boot 3.x Banner.Mode import corrected
-
-### Known Issues
-- Electron crashes with SIGTRAP on macOS (backend IPC proven working standalone)
+### Removed
+- Known issue "Electron SIGTRAP crash" - **RESOLVED** with version downgrade
 
 ### Changed
 - **Major Overhaul**: Completely rewrote `.github/copilot-instructions.md` for GitHub Copilot optimization
