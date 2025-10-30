@@ -8,6 +8,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **IPC Inference Integration (Phase 1 Complete)**:
+  - **IPCHandler Inference Endpoint**: New `case "infer"` message handler
+    - Request validation (empty code check)
+    - On-demand model initialization
+    - Prompt strategy parsing (TASK_PREFIX, LANGUAGE_AWARE, etc.)
+    - Latency tracking
+    - Detailed error handling with JSON responses
+    - Request format: `{"type":"infer","id":"...","code":"...","language":"...","strategy":"...","modelName":"..."}`
+    - Response format: `{"type":"completion","id":"...","text":"...","latencyMs":...,"language":"...","strategy":"...","modelName":"..."}`
+  - **Integration Test Suite**: IPCInferenceIntegrationTest.java
+    - Manual dependency injection (no Spring context)
+    - Reflection-based private method testing
+    - Standalone main() for easy execution
+    - **TEST PASSED** ✅: Full pipeline working (IPC → Tokenize → Encode → Decode → Detokenize → Response)
+  - **Performance Results**:
+    - Model initialization: 2.57s ✅ (49% under target)
+    - Tokenization: 4.51s ⚠️ (Python process startup overhead)
+    - Encoder forward: 47ms ✅
+    - Decoder generation: 6.3s (50 tokens, autoregressive)
+    - Detokenization: 3.24s ⚠️ (Python process startup)
+    - **Total latency**: 16.73s (needs optimization Phase 2)
+    - Completion: 119 chars generated
+  - **Quality Observations**:
+    - Base model generates generic/wrong-language text (e.g., Ruby `puts` instead of Python `print`)
+    - Repetitive outputs ("bye!" repeated)
+    - Validates need for fine-tuning (Phase 4)
+  - **Known Bottlenecks**:
+    - Python process startup: 3-4s per call (needs pooling/persistent process)
+    - Autoregressive decoding: ~126ms/token (needs KV cache)
+    - Total 167x slower than 100ms target (optimization Phase 2)
+  - **Files**:
+    - `backend/src/main/java/dev/neuralforge/ipc/IPCHandler.java`: Added handleInferenceRequest() method
+    - `backend/src/test/java/dev/neuralforge/ipc/IPCInferenceIntegrationTest.java`: New integration test (~115 lines)
+    - `TEST_RESULTS.md`: Sprint 3 documented
+  - **Status**: Phase 1 core pipeline complete ✅ - IPC → Inference end-to-end working
+
 - **T5 Inference Pipeline (Phase 1 Near Complete)**:
   - **Tokenization**: TokenizerService (~270 lines) with Python integration
     - Process-based tokenization via nf_tokenize.py (transformers AutoTokenizer)
