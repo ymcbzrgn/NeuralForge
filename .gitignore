@@ -176,3 +176,5 @@ oldDocs/
 .codacy/
 backend/SPRINT1_RESULTS.md
 backend/TOKENIZER_POOL_DESIGN.md
+backend/benchmark-output.txt
+backend/benchmark-microsecond-output.txt
