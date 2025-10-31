@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Test suite for TokenizerService
+ * Test suite for TokenizerService with TokenizerProcessPool
  * 
- * Tests tokenization of code strings using Python tokenizer
+ * Tests tokenization of code strings using process pool (integration test)
  */
 public class TokenizerServiceTest {
     
@@ -14,10 +14,21 @@ public class TokenizerServiceTest {
     
     public static void main(String[] args) {
         logger.info("========================================");
-        logger.info("TokenizerService Test Suite");
+        logger.info("TokenizerService Test Suite (with Pool)");
         logger.info("========================================\n");
         
-        TokenizerService tokenizer = new TokenizerService();
+        // Initialize process pool
+        TokenizerProcessPool pool = new TokenizerProcessPool();
+        try {
+            logger.info("Initializing process pool (this may take 10-15s)...");
+            pool.initialize();
+            logger.info("Process pool ready!\n");
+        } catch (Exception e) {
+            logger.error("Failed to initialize process pool", e);
+            System.exit(1);
+        }
+        
+        TokenizerService tokenizer = new TokenizerService(pool);
         boolean allPassed = true;
         
         // Test 1: Simple Python code
@@ -37,9 +48,15 @@ public class TokenizerServiceTest {
             logger.info("✓ ALL TESTS PASSED");
         } else {
             logger.error("✗ SOME TESTS FAILED");
+            pool.shutdown();
             System.exit(1);
         }
         logger.info("========================================");
+        
+        // Shutdown pool
+        logger.info("\nShutting down process pool...");
+        pool.shutdown();
+        logger.info("Done!");
     }
     
     private static boolean testSimplePython(TokenizerService tokenizer) {
@@ -149,17 +166,17 @@ public class TokenizerServiceTest {
             logger.info("Output: {} tokens", result.getLength());
             logger.info("Duration: {}ms", result.getDurationMs());
             
-            // Performance target: <10ms for ~100 tokens
-            // But first run includes Python startup, so be lenient
-            long maxDuration = 2000; // 2 seconds for first run (Python startup)
+            // Performance target with pool: <500ms (no Python startup!)
+            long maxDuration = 1000; // 1 second max (should be way under)
             
             if (result.getDurationMs() > maxDuration) {
-                logger.warn("⚠ WARN: Tokenization took {}ms (target: <{}ms)", 
+                logger.error("✗ FAIL: Tokenization took {}ms (target: <{}ms)", 
                     result.getDurationMs(), maxDuration);
-                logger.warn("Note: First run includes Python startup overhead");
+                return false;
             }
             
-            logger.info("✓ PASS: Performance check ({}ms)\n", result.getDurationMs());
+            logger.info("✓ PASS: Performance check ({}ms, target <{}ms)\n", 
+                result.getDurationMs(), maxDuration);
             return true;
             
         } catch (Exception e) {

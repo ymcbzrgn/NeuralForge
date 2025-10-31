@@ -174,3 +174,6 @@ oldDocs/
 
 # Codacy configuration
 .codacy/
+backend/TOKENIZER_POOL_DESIGN.md
+.gitignore
+backend/SPRINT1_RESULTS.md

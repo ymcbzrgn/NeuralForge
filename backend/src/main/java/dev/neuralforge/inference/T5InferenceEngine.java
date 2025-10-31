@@ -369,79 +369,18 @@ public class T5InferenceEngine {
     }
     
     /**
-     * Detokenize token IDs back to text using Python script
+     * Detokenize token IDs back to text using TokenizerService (with process pool)
+     * 
+     * BEFORE: Used ProcessBuilder (~2800ms with Python startup overhead)
+     * NOW: Uses TokenizerProcessPool (<100ms, no startup!)
      */
     private String detokenize(List<Long> tokenIds) throws Exception {
         if (tokenIds.isEmpty()) {
             return "";
         }
         
-        // Prepare JSON input
-        Map<String, Object> inputData = new HashMap<>();
-        inputData.put("token_ids", tokenIds);
-        
-        com.fasterxml.jackson.databind.ObjectMapper mapper = 
-            new com.fasterxml.jackson.databind.ObjectMapper();
-        String jsonInput = mapper.writeValueAsString(inputData);
-        
-        // Build process
-        String pythonPath = Paths.get("../models/.venv/bin/python").toAbsolutePath().toString();
-        String scriptPath = Paths.get("../models/nf_detokenize.py").toAbsolutePath().toString();
-        String modelPath = Paths.get(MODELS_DIR, loadedModelName).toAbsolutePath().toString();
-        
-        ProcessBuilder pb = new ProcessBuilder(pythonPath, scriptPath, modelPath);
-        pb.redirectErrorStream(false);
-        
-        Process process = pb.start();
-        
-        // Write JSON to stdin
-        try (java.io.OutputStreamWriter writer = new java.io.OutputStreamWriter(
-                process.getOutputStream(), java.nio.charset.StandardCharsets.UTF_8)) {
-            writer.write(jsonInput);
-            writer.flush();
-        }
-        
-        // Read output
-        StringBuilder output = new StringBuilder();
-        try (java.io.BufferedReader reader = new java.io.BufferedReader(
-                new java.io.InputStreamReader(process.getInputStream(), 
-                java.nio.charset.StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line);
-            }
-        }
-        
-        // Wait for process
-        boolean finished = process.waitFor(5000, java.util.concurrent.TimeUnit.MILLISECONDS);
-        if (!finished) {
-            process.destroyForcibly();
-            throw new Exception("Detokenization timeout");
-        }
-        
-        if (process.exitValue() != 0) {
-            // Read stderr
-            StringBuilder errors = new StringBuilder();
-            try (java.io.BufferedReader errorReader = new java.io.BufferedReader(
-                    new java.io.InputStreamReader(process.getErrorStream(), 
-                    java.nio.charset.StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = errorReader.readLine()) != null) {
-                    errors.append(line).append("\n");
-                }
-            }
-            throw new Exception("Detokenization failed: " + errors.toString());
-        }
-        
-        // Parse output JSON
-        com.fasterxml.jackson.databind.JsonNode jsonNode = 
-            mapper.readTree(output.toString().trim());
-        
-        if (jsonNode.has("error")) {
-            throw new Exception("Detokenization error: " + jsonNode.get("error").asText());
-        }
-        
-        return jsonNode.get("text").asText();
+        // Use TokenizerService which delegates to process pool
+        return tokenizerService.detokenize(tokenIds);
     }
     
     /**

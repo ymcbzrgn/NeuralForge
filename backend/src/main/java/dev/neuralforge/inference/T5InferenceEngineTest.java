@@ -11,16 +11,28 @@ import org.slf4j.LoggerFactory;
 public class T5InferenceEngineTest {
     
     private static final Logger logger = LoggerFactory.getLogger(T5InferenceEngineTest.class);
+    private static dev.neuralforge.tokenizer.TokenizerProcessPool pool;
     
     public static void main(String[] args) {
         logger.info("========================================");
         logger.info("T5 Inference Engine Test Suite");
         logger.info("========================================\n");
         
+        // Initialize process pool (shared for all tests)
+        logger.info("Initializing tokenizer process pool (10-15s)...");
+        pool = new dev.neuralforge.tokenizer.TokenizerProcessPool();
+        try {
+            pool.initialize();
+            logger.info("Process pool ready!\n");
+        } catch (Exception e) {
+            logger.error("Failed to initialize process pool", e);
+            System.exit(1);
+        }
+        
         // Create engine and manually inject dependencies (no Spring context in test)
         T5InferenceEngine engine = new T5InferenceEngine();
         dev.neuralforge.tokenizer.TokenizerService tokenizerService = 
-            new dev.neuralforge.tokenizer.TokenizerService();
+            new dev.neuralforge.tokenizer.TokenizerService(pool);
         
         // Manually inject tokenizer (reflection hack for testing)
         try {
@@ -45,6 +57,7 @@ public class T5InferenceEngineTest {
         
         // Cleanup
         engine.shutdown();
+        pool.shutdown();
         
         logger.info("\n========================================");
         if (allPassed) {

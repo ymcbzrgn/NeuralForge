@@ -21,10 +21,17 @@ public class IPCInferenceIntegrationTest {
     public void testInferenceRequest() throws Exception {
         logger.info("=== IPC Inference Integration Test ===");
         
+        // Initialize process pool
+        logger.info("Initializing tokenizer process pool (10-15s)...");
+        dev.neuralforge.tokenizer.TokenizerProcessPool pool = 
+            new dev.neuralforge.tokenizer.TokenizerProcessPool();
+        pool.initialize();
+        logger.info("Process pool ready!");
+        
         // Create components manually (no Spring context)
         IPCHandler handler = new IPCHandler();
         T5InferenceEngine engine = new T5InferenceEngine();
-        TokenizerService tokenizerService = new TokenizerService();
+        TokenizerService tokenizerService = new TokenizerService(pool);
         
         // Inject dependencies via reflection
         injectDependency(handler, "inferenceEngine", engine);
@@ -99,6 +106,9 @@ public class IPCInferenceIntegrationTest {
             ? completionText.substring(0, 100) + "..." 
             : completionText;
         logger.info("  Preview: {}", preview);
+        
+        // Cleanup
+        pool.shutdown();
         
         logger.info("=== TEST PASSED ✅ ===");
     }

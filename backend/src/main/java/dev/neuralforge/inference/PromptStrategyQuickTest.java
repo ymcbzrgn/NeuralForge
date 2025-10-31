@@ -15,10 +15,22 @@ public class PromptStrategyQuickTest {
         logger.info("Prompt Strategy Quick Test");
         logger.info("========================================\n");
         
+        // Initialize process pool
+        logger.info("Initializing tokenizer process pool (10-15s)...");
+        dev.neuralforge.tokenizer.TokenizerProcessPool pool = 
+            new dev.neuralforge.tokenizer.TokenizerProcessPool();
+        try {
+            pool.initialize();
+            logger.info("Process pool ready!\n");
+        } catch (Exception e) {
+            logger.error("Failed to initialize process pool", e);
+            System.exit(1);
+        }
+        
         // Create engine and inject dependencies
         T5InferenceEngine engine = new T5InferenceEngine();
         dev.neuralforge.tokenizer.TokenizerService tokenizerService = 
-            new dev.neuralforge.tokenizer.TokenizerService();
+            new dev.neuralforge.tokenizer.TokenizerService(pool);
         
         try {
             java.lang.reflect.Field field = T5InferenceEngine.class.getDeclaredField("tokenizerService");
@@ -44,6 +56,7 @@ public class PromptStrategyQuickTest {
             testStrategy(engine, input, PromptStrategy.LANGUAGE_AWARE, "Language-aware");
             
             engine.shutdown();
+            pool.shutdown();
             
             logger.info("\n========================================");
             logger.info("✓ Prompt strategy comparison complete");
