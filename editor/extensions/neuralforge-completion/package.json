@@ -1,0 +1,97 @@
+{
+  "name": "neuralforge-completion",
+  "displayName": "NeuralForge AI Completion",
+  "description": "100% local AI-powered code completion with embedded models",
+  "version": "0.1.0",
+  "publisher": "neuralforge",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ymcbzrgn/NeuralForge"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning",
+    "Snippets"
+  ],
+  "keywords": [
+    "ai",
+    "code completion",
+    "intellisense",
+    "copilot",
+    "local",
+    "privacy"
+  ],
+  "activationEvents": [
+    "onLanguage:java",
+    "onLanguage:python",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:go",
+    "onLanguage:rust"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "NeuralForge",
+      "properties": {
+        "neuralforge.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable AI code completions"
+        },
+        "neuralforge.debounceMs": {
+          "type": "number",
+          "default": 500,
+          "minimum": 100,
+          "maximum": 2000,
+          "description": "Wait time (ms) before requesting completion"
+        },
+        "neuralforge.maxCompletionLength": {
+          "type": "number",
+          "default": 200,
+          "minimum": 50,
+          "maximum": 1000,
+          "description": "Maximum characters in completion"
+        },
+        "neuralforge.modelName": {
+          "type": "string",
+          "default": "codet5-220m",
+          "enum": [
+            "codet5-220m",
+            "codet5-770m",
+            "stablecode-3b"
+          ],
+          "description": "AI model to use for completions"
+        },
+        "neuralforge.promptStrategy": {
+          "type": "string",
+          "default": "LANGUAGE_AWARE",
+          "enum": [
+            "NONE",
+            "TASK_PREFIX",
+            "INSTRUCTION",
+            "FEW_SHOT",
+            "LANGUAGE_AWARE"
+          ],
+          "description": "Prompt engineering strategy"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}
