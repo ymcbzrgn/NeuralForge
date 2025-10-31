@@ -9,35 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Phase 2 Sprint 2: Smart Model Selection - IN PROGRESS (October 31, 2025)
 
-**Status**: Task 10 Complete - ModelRouter ✅
+**Status**: Task 11 Complete - ModelCache ✅
 
 **Completed Tasks**:
 - ✅ **Task 8**: CodeComplexityAnalyzer (October 31, 2025)
   - Heuristic-based complexity analysis (0.0-1.0 score)
-  - 5 weighted metrics for intelligent model selection
-  - 14/14 tests passing, <10ms per analysis
+  - 5 weighted metrics, 14/14 tests ✅
   
 - ✅ **Task 9**: MemoryManager (October 31, 2025)
-  - JVM heap memory tracking and OOM prevention
-  - Safety buffer enforcement (512MB minimum)
-  - 14/14 tests passing
+  - JVM heap tracking, OOM prevention
+  - 14/14 tests ✅
   
 - ✅ **Task 10**: ModelRouter (October 31, 2025)
-  - Intelligent model selection combining complexity + memory
-  - Algorithm:
-    1. Analyze code complexity (CodeComplexityAnalyzer)
-    2. Select ideal model: Simple (0.0-0.3) → 33M, Medium (0.3-0.7) → 770M, Complex (0.7-1.0) → 3B
-    3. Check memory constraints (MemoryManager)
-    4. Fallback to smaller model if insufficient memory
-  - Ultimate fallback: 33M (always fits)
-  - Returns ModelSelection with chosen model + reasoning
-  - 14/14 tests passing (includes fallback strategy tests)
-  - Files: ModelRouter.java (198 lines), ModelRouterTest.java (301 lines)
-  - **CRITICAL MILESTONE**: Core smart routing logic complete! 🎯
+  - Smart model selection (complexity + memory)
+  - Fallback strategy, 14/14 tests ✅
+  
+- ✅ **Task 11**: ModelCache (October 31, 2025)
+  - LRU cache for loaded ONNX models
+  - Avoids expensive reload operations
+  - Features:
+    * LinkedHashMap with access-order for LRU behavior
+    * Memory-aware eviction (check before load)
+    * Automatic LRU eviction on memory pressure
+    * Cache statistics (hits/misses/hit rate)
+    * Thread-safe (synchronized methods)
+  - Max 3 models cached (realistic: 1-2 due to memory)
+  - 14/14 tests passing (includes eviction strategy)
+  - Files: ModelCache.java (210 lines), ModelCacheTest.java (246 lines)
 
 **Next Tasks**:
-- Task 11: Model caching (LRU cache for loaded models)
 - Task 12: KV cache (BIGGEST remaining optimization - 68% decoder speedup!)
+- Task 13: Integration tests
+- Task 14: Performance benchmarks
+- Task 15: Sprint 2 commit & push
 
 ---
 
