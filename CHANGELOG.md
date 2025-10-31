@@ -7,7 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### 🎉 Phase 2 Sprint 2: Smart Model Selection - COMPLETE! (October 31, 2025)
+### 🚨 MAJOR PIVOT: VS Code Fork → Tauri IDE (October 31, 2024)
+
+**Decision Date**: 2024-10-31  
+**Rationale**: User feedback requested simpler IDE with full AI chat capabilities, YOLO mode, learning system, and RAG. VS Code fork (3GB code) was too complex and Extension API was too restrictive.
+
+**Changes**:
+- ❌ **Removed**: VS Code fork approach (editor/, editor 2/ directories ignored)
+- ❌ **Removed**: VS Code extension skeleton (editor/extensions/neuralforge-completion/)
+- ✅ **Added**: Tauri-based IDE architecture (Phase 3, 9 sprints, 6 weeks)
+- ✅ **Added**: Comprehensive roadmap (ROADMAP.md updated)
+- ✅ **Added**: 55-task TODO list aligned with 9 sprints
+- ✅ **Added**: Multi-provider chat support (local, OpenAI, Claude, Gemini)
+- ✅ **Added**: Code Actions (file create/modify/delete from chat)
+- ✅ **Added**: Learning System (style analyzer, pattern detector)
+- ✅ **Added**: RAG System (Qdrant, framework docs crawler)
+- ✅ **Added**: Vibe Coding (context-aware, multi-step tasks)
+
+**Architecture Changes**:
+```yaml
+Old: Electron + VS Code OSS + Extension API → 200MB RAM, 3GB code
+New: Tauri + Monaco + React + Java Backend → 50MB RAM, lightweight
+
+Old IPC: JSON-RPC named pipes
+New IPC: stdin/stdout JSON (simpler)
+
+Old Frontend: VS Code fork (complex, restricted)
+New Frontend: Custom Tauri app (full control)
+```
+
+**Documentation Updated**:
+- ✅ `ROADMAP.md` - Complete rewrite (9 sprints, 550 lines)
+- ✅ `README.md` - Updated to reflect Tauri IDE vision
+- ✅ `ARCHITECTURE.md` - Added Tauri architecture
+- ✅ `NeuralForge_PRD.md` - Updated product vision and features
+- ✅ `.gitignore` - Added editor/ and editor 2/ to ignore list
+
+**Backend Status**: ✅ Phase 1-2 COMPLETE, untouched (86 tests passing)
+
+---
+
+### 🎉 Phase 2 Sprint 2: Smart Model Selection - COMPLETE! (October 31, 2024)
 
 **Status**: ✅ ALL TASKS COMPLETE - 100% SUCCESS! 🎯
 
@@ -58,7 +98,38 @@ A complete **intelligent model routing system** with dual-layer caching:
 **Sprint Velocity**: 8 tasks completed
 **Quality**: Zero defects, all tests passing
 
-**Next Phase**: Phase 3 - Frontend Integration & IPC 🚀
+**Next Phase**: Phase 3.1 - Frontend Integration (VS Code Completion Provider + Ghost Text UI) 🚀
+
+---
+
+## [Unreleased]
+
+### 🎯 Phase 3: Frontend Integration & Context Intelligence (Starting Now!)
+
+**Current Focus**: Phase 3.1 - Frontend Integration
+
+**Goal**: Connect VS Code fork to backend and show real-time AI completions to users!
+
+**Why This Phase?**
+Backend is production-ready (model loading ✅, inference ✅, routing ✅, caching ✅, 86 tests passing ✅) but users can't see completions! This phase makes NeuralForge actually usable.
+
+**What We're Building**:
+- 🎨 Ghost text rendering (gray inline suggestions)
+- ⌨️ Keyboard shortcuts (Tab = accept, Esc = reject)
+- � IPC integration with existing backend
+- ⚡ Debounced requests (no spam!)
+- 🛡️ Graceful error handling
+- 🌍 Multi-language support (Java, Python, TypeScript, JavaScript)
+
+**Documentation**:
+- `backend/PHASE3.1_FRONTEND_INTEGRATION_PLAN.md` created (comprehensive plan)
+- Task breakdown: 5 sprints, ~11 days estimated
+- Success criteria defined
+- Architecture designed
+
+**Status**: Planning complete, ready to start Sprint 1 (Extension Skeleton)
+
+---
 
 ---
 

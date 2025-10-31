@@ -1,154 +1,240 @@
 # Product Requirements Document (PRD)
-# Project: NeuralForge - SLM-First Intelligent Code Editor
+# Project: NeuralForge - Local-First AI IDE
+
+**Last Updated**: 2024-10-31  
+**Status**: Phase 1-2 Complete (Backend), Phase 3 Starting (Tauri IDE)
+
+---
+
+## 🚨 Major Pivot (2024-10-31)
+
+**OLD Vision:** VS Code fork with embedded SLMs  
+**NEW Vision:** Lightweight Tauri-based IDE with local AI + optional cloud providers
+
+**Reason:** User feedback requested simpler IDE, full AI chat with project manipulation, YOLO mode, learning system, and RAG for framework docs. VS Code fork was too complex and restrictive.
+
+---
 
 ## 1. Executive Summary
 
-**NeuralForge** is an ambitious open-source project aiming to democratize AI-assisted coding through Small Language Models (SLMs), offering code intelligence that runs entirely locally.
+**NeuralForge** is an open-source local-first AI IDE built with Tauri, offering intelligent code completion, AI chat with project manipulation, adaptive learning, and framework documentation search.
 
-### Target Goals
-- **Model Size**: ~1GB (compact and efficient)
-- **RAM Usage**: 3-4GB maximum
-- **Inference Speed**: <100ms target
-- **Cost**: $0 (completely free and open-source)
-- **Privacy**: 100% local, zero telemetry
+### Target Goals (v0.1.0)
+- **Binary Size**: ~50MB (Tauri efficiency)
+- **RAM Usage**: ~300MB idle (75% less than Electron)
+- **Inference Speed**: <50ms (local AI)
+- **Cost**: $0 for local AI (optional cloud providers)
+- **Privacy**: 100% local by default, optional cloud
 
 ---
 
 ## 2. Product Vision
 
 ### Mission Statement
-"Empower every developer with personalized AI assistance that learns and evolves with their coding style, runs on any machine, and respects their privacy - all while being completely free."
+"Empower developers with a lightweight, privacy-first AI IDE that learns their coding style, provides intelligent assistance, and optionally connects to cloud AI providers - all while running primarily on local hardware."
 
 ### Core Principles
-1. **Privacy-First**: All data stays local, no cloud dependencies
-2. **Efficiency-Obsessed**: Runs on 5-year-old laptops
-3. **Community-Driven**: Open-source with adapter marketplace
-4. **Continuous Learning**: Models improve with every keystroke
-5. **Developer-Centric**: Built by developers, for developers
+1. **Local-First**: Default to local AI, optional cloud providers
+2. **Lightweight**: Tauri (50MB) vs Electron (200MB) architecture
+3. **Privacy-Respecting**: Code stays local unless user chooses cloud
+4. **Community-Driven**: Open-source with transparent development
+5. **Adaptive Learning**: AI learns user's coding style over time
+6. **Developer-Centric**: Built by developers, for developers
 
 ---
 
 ## 3. Target Audience
 
 ### Primary Users
-- **Individual Developers**: Freelancers and hobbyists wanting free AI assistance
-- **Small Teams**: Startups needing customizable coding standards
-- **Enterprise Developers**: Companies requiring on-premise AI solutions
-- **Students**: Learning to code with intelligent mentoring
-- **Open Source Contributors**: Privacy-conscious developers
+- **Individual Developers**: Privacy-conscious developers wanting local AI
+- **Small Teams**: Startups needing lightweight tools with optional cloud
+- **Enterprise Developers**: Companies preferring on-premise with optional external AI
+- **Students**: Learning to code with AI mentoring
+- **Open Source Contributors**: Developers building in public
 
 ### User Personas
 
-#### Persona 1: "Privacy-Conscious Pro"
+#### Persona 1: "Privacy-First Developer"
 - 5+ years experience
-- Works on sensitive projects
-- Wants AI help without data leaks
-- Has modern but not cutting-edge hardware
+- Works on sensitive/proprietary projects
+- Wants AI help without mandatory cloud dependency
+- Appreciates option to use cloud AI when needed
 
-#### Persona 2: "Resource-Limited Learner"
+#### Persona 2: "Lightweight User"
 - Student or junior developer
 - 4GB-8GB RAM laptop
-- Cannot afford Copilot subscription
-- Needs learning assistance
+- Cannot afford heavy Electron apps
+- Needs fast, responsive IDE
 
-#### Persona 3: "Team Lead"
-- Manages 5-10 developers
-- Wants consistent code style
-- Needs team-specific patterns
-- Values on-premise deployment
+#### Persona 3: "Hybrid Worker"
+- Uses local AI for most tasks
+- Occasionally needs GPT-4/Claude for complex problems
+- Values choice: local by default, cloud optional
+- Cares about performance and privacy
 
 ---
 
-## 4. Core Features
+## 4. Core Features (v0.1.0 Target)
 
-### 4.1 Intelligent Code Completion
+### 4.1 Lightweight IDE (Tauri-Based)
 
-#### Ghost Text Prediction
+#### Monaco Editor Integration
+```typescript
+Features:
+├── Syntax highlighting (50+ languages)
+├── IntelliSense
+├── Multi-file tabs
+├── File explorer tree view
+├── Settings panel
+└── Theme support (dark/light)
+```
+
+**Why Tauri?**
+- 50MB RAM vs 200MB (Electron)
+- Native performance
+- Smaller binary size (~50MB vs ~200MB)
+- Faster startup (<3s vs 5-8s)
+
+### 4.2 AI Code Completion (Ghost Text)
+
+#### Inline Completion System
 ```typescript
 interface GhostTextEngine {
-  - Multi-line completion
-  - Context-aware suggestions
-  - Syntax-guaranteed output
-  - Sub-50ms latency
-  - Speculative decoding (3 models parallel)
+  - Real-time suggestions as you type
+  - Gray text overlay (opacity 0.6)
+  - Tab to accept, Esc to reject
+  - 500ms debouncing (smart request throttling)
+  - YOLO mode (auto-accept completions)
 }
 ```
 
-#### Adaptive Learning
-- Learns from accepted/rejected completions
-- Adjusts to coding style within 100 interactions
-- Project-specific pattern recognition
-- Git history analysis for context
+#### Performance Targets
+- **Latency**: <50ms (local model)
+- **Accuracy**: Context-aware (file + cursor position)
+- **Memory**: <2GB model footprint (CodeT5+ 220M)
 
-### 4.2 Multi-Model Architecture
+### 4.3 AI Chat Panel
 
-#### Model Orchestra System
+#### Chat Features
 ```yaml
-Primary Models (Always Active):
-├── CodeT5+ 770M: General completion
-├── SantaCoder 1.1B: Multi-language support
-└── TinyStories-Code 33M: Comment generation
-
-Specialized Models (On-Demand):
-├── SQLCoder 350M: Database queries
-├── RegexNet 50M: Regex patterns
-├── DocString 125M: Documentation
-└── TestGen 220M: Unit test generation
+UI:
+  - Side panel (resizable)
+  - Message bubbles (user right, AI left)
+  - Code blocks with syntax highlighting
+  - Copy button for code snippets
+  
+Context-Awareness:
+  - Knows about open files
+  - Understands current selection
+  - Analyzes compile errors
+  
+Providers:
+  - Local (default, CodeT5+ 220M)
+  - OpenAI (optional, user's API key)
+  - Claude (optional, user's API key)
+  - Gemini (optional, user's API key)
+  - Custom (user's endpoint)
 ```
 
-#### Smart Router
+#### Code Actions
+```typescript
+// AI can directly manipulate project files
+interface CodeActions {
+  createFile(path: string, content: string): void;
+  modifyFile(path: string, changes: FileDiff): void;
+  deleteFile(path: string): void;
+  
+  // With preview and confirmation
+  previewChanges(actions: FileAction[]): void;
+  applyChanges(actions: FileAction[]): void;
+  undoChanges(actionId: string): void;
+}
+```
+
+### 4.4 Learning System
+
+#### Style Analyzer
 ```java
-ModelSelection Algorithm:
-1. Analyze context (file type, cursor position)
-2. Check recent edits pattern
-3. Evaluate complexity score
-4. Select optimal model combination
-5. Merge outputs with voting system
+class StyleAnalyzer {
+  // Detects user preferences from codebase
+  - Naming conventions (camelCase vs snake_case)
+  - Formatting style (tabs vs spaces, brace position)
+  - Comment density and style
+  - Import organization
+  - Test patterns
+}
 ```
 
-### 4.3 Revolutionary Fine-Tuning System
-
-#### Incremental Learning Pipeline
-```python
-class ContinualLearning:
-    def __init__(self):
-        self.base_model = frozen_weights
-        self.adapters = {
-            'syntax': LoRAAdapter(r=4),      # 10MB
-            'patterns': LoRAAdapter(r=8),     # 40MB
-            'personal': LoRAAdapter(r=4),     # 10MB
-            'project': LoRAAdapter(r=16),     # 80MB
-        }
-    
-    def learn_from_interaction(self, code, feedback):
-        # Real-time learning without forgetting
-        # Elastic Weight Consolidation (EWC)
-        # Experience Replay Buffer
+#### Adaptive Suggestions
+```java
+class StyleAdapter {
+  // Applies learned style to AI output
+  - Match user's naming conventions
+  - Follow user's formatting
+  - Suggest libraries user already uses
+  - Maintain project consistency
+}
 ```
 
-#### Auto Fine-Tuning Triggers
-- Every 500 lines of code written
-- After each successful build
-- On commit (learns from diff)
-- During code review (learns from comments)
+#### Learning Dashboard
+```typescript
+// Show user what AI learned
+interface LearningDashboard {
+  namingStyle: "camelCase" | "snake_case" | "mixed";
+  librariesUsed: string[];  // ["Spring Boot", "JUnit 5", "Lombok"]
+  testFramework: string;     // "JUnit 5"
+  codeStyle: StyleProfile;   // indent, braces, etc.
+}
+```
 
-### 4.4 Git-Aware Intelligence
+### 4.5 RAG System (Framework Documentation)
 
-#### Historical Context Analysis
-```bash
+#### Qdrant Vector Database
+```java
 Features:
-├── "Who wrote this?" → Style mimicking
-├── "How was this fixed before?" → Pattern matching
-├── "Common mistakes here" → Proactive warnings
-└── "Team conventions" → Auto-enforcement
+├── Embedded mode (no external services)
+├── Semantic search (CodeBERT embeddings)
+├── Framework auto-detection (pom.xml, package.json)
+├── Auto-crawler (Spring Boot, React, etc. docs)
+└── Code snippet extraction
 ```
 
-#### Commit Message Generation
-- Analyzes diff semantically
-- Follows team's commit style
-- Links to issue numbers automatically
+#### Usage Examples
+```typescript
+// User asks in chat:
+"How to use @Transactional in Spring Boot?"
 
-### 4.5 Project DNA System
+// RAG System:
+1. Detects Spring Boot from pom.xml
+2. Queries Qdrant for "Spring @Transactional"
+3. Returns top 5 relevant doc snippets
+4. AI synthesizes answer with examples
+```
+
+### 4.6 Vibe Coding (Context-Aware Multi-Step Tasks)
+
+#### Context Detection
+```typescript
+// AI understands:
+- Compile errors (from editor diagnostics)
+- Cursor position (what user is working on)
+- Selected code (refactoring target)
+- Project structure (files, dependencies)
+```
+
+#### Multi-Step Execution
+```typescript
+// User: "Refactor this class to use dependency injection"
+// AI:
+1. Shows plan (5 steps)
+2. User approves
+3. AI executes with progress tracker:
+   ✅ Create interface for service
+   ✅ Update constructor with @Autowired
+   🔄 Modify test cases... (in progress)
+   ⏸️ Update configuration
+   ⏸️ Verify build passes
+```
 
 #### Codebase Fingerprinting
 ```yaml

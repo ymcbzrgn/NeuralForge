@@ -1,5 +1,12 @@
 # NeuralForge .gitignore
 
+# ===================================
+# VS Code Fork - OBSOLETE (Pivot 2024-10-31)
+# ===================================
+# Ignoring VS Code fork directories (3GB+, abandoned approach)
+editor/
+editor 2/
+
 # Build outputs
 /build/
 /dist/
@@ -174,7 +181,12 @@ oldDocs/
 
 # Codacy configuration
 .codacy/
+
+# Phase Analysis and Planning Docs (local only)
+backend/PHASE2_ANALYSIS.md
 backend/SPRINT1_RESULTS.md
+backend/SPRINT2_SUMMARY.md
 backend/TOKENIZER_POOL_DESIGN.md
+backend/PHASE3.1_FRONTEND_INTEGRATION_PLAN.md
 backend/benchmark-output.txt
 backend/benchmark-microsecond-output.txt

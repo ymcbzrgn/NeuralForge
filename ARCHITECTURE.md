@@ -1,8 +1,16 @@
 # 🏗️ NeuralForge Architecture
 
-**Status**: Early Planning Phase
+**Status**: Phase 1-2 Complete (Backend), Phase 3 Starting (Tauri IDE)  
+**Last Updated**: 2024-10-31
 
-This document describes the planned architecture for NeuralForge. These designs represent our vision and are subject to change as development progresses.
+## 🚨 Major Pivot (2024-10-31)
+
+**OLD:** VS Code fork + Electron + Extension API  
+**NEW:** Tauri + Monaco + React + Java Backend
+
+**Why?** Simpler, lighter (50MB vs 200MB RAM), full control over features.
+
+---
 
 ## Table of Contents
 - [Overview](#overview)
@@ -12,23 +20,23 @@ This document describes the planned architecture for NeuralForge. These designs 
 - [Model Serving Architecture](#model-serving-architecture)
 - [Performance Optimizations](#performance-optimizations)
 - [Security Architecture](#security-architecture)
-- [Deployment Architecture](#deployment-architecture)
 
 ---
 
 ## Overview
 
-NeuralForge is planned as a **three-layer system**:
-1. **Presentation Layer**: VS Code fork (Electron + Monaco)
-2. **Service Layer**: Java Spring Boot backend with embedded AI engine
+NeuralForge is a **three-layer system**:
+1. **Presentation Layer**: Tauri (Rust + React + Monaco Editor)
+2. **Service Layer**: Java Spring Boot backend (embedded, IPC via stdin/stdout)
 3. **Model Layer**: ONNX-based inference with LoRA adapters
 
 ### Design Principles
 - **Local-First**: Everything runs on user's machine
+- **Lightweight**: Tauri (50MB RAM) vs Electron (200MB RAM)
 - **Modular**: Loosely coupled components
 - **Reactive**: Event-driven, non-blocking I/O
 - **Efficient**: Minimal resource usage through quantization
-- **Extensible**: Plugin architecture for adapters
+- **Extensible**: Multi-provider support (local + cloud optional)
 
 ---
 
@@ -36,39 +44,43 @@ NeuralForge is planned as a **three-layer system**:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                     NeuralForge Editor                       │
-│                    (Electron Application)                     │
+│                   NeuralForge Desktop App                     │
+│                    (Tauri 1.5+ Application)                   │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  ┌──────────────────────────┐  ┌──────────────────────┐    │
-│  │     Monaco Editor         │  │    UI Components     │    │
-│  │  (Code Editor Core)       │  │  (Sidebar, Panels)   │    │
+│  │     Monaco Editor         │  │   React UI Layer     │    │
+│  │  (VS Code's Editor)       │  │  (Chat, Settings,    │    │
+│  │  - Syntax highlighting    │  │   File Explorer)     │    │
+│  │  - IntelliSense           │  │                      │    │
+│  │  - Ghost Text overlay     │  │                      │    │
 │  └────────────┬──────────────┘  └───────────┬──────────┘    │
 │               │                              │               │
 │  ┌────────────▼──────────────────────────────▼──────────┐   │
-│  │              Extension Host Process                   │   │
-│  │         (Isolated for security & stability)           │   │
+│  │              Tauri Rust Backend                       │   │
+│  │         (IPC Commands + File Operations)              │   │
+│  │  #[tauri::command] completion_request()               │   │
+│  │  #[tauri::command] chat_message()                     │   │
+│  │  #[tauri::command] file_create/modify/delete()        │   │
 │  └────────────────────────┬──────────────────────────────┘   │
 │                           │                                  │
 ├───────────────────────────┼──────────────────────────────────┤
-│                           │                                  │
-│  ┌────────────────────────▼──────────────────────────────┐   │
-│  │                  IPC Bridge                           │   │
-│  │            (JSON-RPC over Named Pipes)                │   │
-│  └────────────────────────┬──────────────────────────────┘   │
-│                           │                                  │
+│                           │ IPC (stdin/stdout JSON)          │
 └───────────────────────────┼──────────────────────────────────┘
                             │
                 ┌───────────▼───────────┐
                 │   Java Backend        │
-                │  (Embedded in App)    │
+                │  (Spring Boot 3.2)    │
+                │  Phase 1-2 ✅ COMPLETE│
+                │  86 tests passing     │
                 └───────────┬───────────┘
                             │
         ┌───────────────────┼───────────────────┐
         │                   │                   │
 ┌───────▼───────┐ ┌─────────▼─────────┐ ┌──────▼──────┐
-│  AI Service   │ │   LSP Server      │ │  RAG Engine │
-│  (DJL/ONNX)   │ │ (Code Intelligence)│ │  (Qdrant)   │
+│ InferenceEngine│ │  LearningSystem   │ │  RAG Engine │
+│  (ONNX Runtime)│ │ (StyleAnalyzer)   │ │  (Qdrant)   │
+│  CodeT5+ 220M  │ │ (PatternDetector) │ │  (Embedded) │
 └───────┬───────┘ └─────────┬─────────┘ └──────┬──────┘
         │                   │                   │
         └───────────────────┼───────────────────┘
@@ -76,29 +88,60 @@ NeuralForge is planned as a **three-layer system**:
                     ┌───────▼───────┐
                     │  Model Store   │
                     │ (File System)  │
+                    │ - models/base/ │
+                    │ - ~/.neuralforge/│
                     └────────────────┘
 ```
+
+### Key Differences from Old Architecture
+| Component | Old (VS Code Fork) | New (Tauri) |
+|-----------|-------------------|-------------|
+| **Frontend** | Electron (200MB RAM) | Tauri (50MB RAM) |
+| **Editor** | Monaco + VS Code OSS | Monaco standalone |
+| **IPC** | JSON-RPC named pipes | stdin/stdout JSON |
+| **Extension API** | VS Code Extension Host | Full Rust commands |
+| **Binary Size** | ~200MB | ~50MB |
+| **Startup** | 5-8s | <3s |
 
 ---
 
 ## Component Design
 
-### 1. Frontend Components (TypeScript/Electron)
+### 1. Frontend Components (React + TypeScript + Tauri)
 
 #### Editor Core
 ```typescript
+// Monaco Editor Wrapper
 interface EditorCore {
-  // Monaco editor instance with custom overlays
-  editor: monaco.IStandaloneCodeEditor;
+  editor: monaco.editor.IStandaloneCodeEditor;
   
-  // AI-specific extensions
-  ghostText: GhostTextController;      // Inline completions
-  aiChat: AIChatPanel;                 // Side panel chat
-  mentorMode: MentorOverlay;           // Educational hints
+  // AI Features
+  ghostText: GhostTextController;       // Inline completions
+  completionProvider: CompletionProvider; // Monaco API integration
+  debouncer: Debouncer;                  // 500ms delay
+  
+  // Chat
+  chatPanel: ChatPanel;                  // Side panel
+  contextManager: ContextManager;         // File + selection context
+  
+  // Learning
+  learningDashboard: LearningDashboard;   // User style display
   
   // Communication
-  backend: BackendBridge;               // IPC to Java
-  lsp: LSPClient;                      // Language server
+  backend: TauriInvokeAPI;                // invoke() for IPC
+}
+```
+
+#### Chat Panel
+```typescript
+interface ChatPanel {
+  messages: ChatMessage[];
+  providers: Provider[];  // Local, OpenAI, Claude, Gemini, Custom
+  
+  sendMessage(text: string, context: CodeContext): Promise<ChatResponse>;
+  executeCodeActions(actions: FileAction[]): Promise<void>;
+  previewChanges(actions: FileAction[]): void;
+}
 }
 ```
 

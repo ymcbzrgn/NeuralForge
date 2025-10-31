@@ -1,21 +1,20 @@
 # 🚀 NeuralForge
 
-**A Desktop AI Code Editor** - Like Cursor or VS Code, but 100% local and privacy-first.
+**A Lightweight AI Code Editor** - Tauri-based IDE with local AI, built for privacy and performance.
 
 <div align="center">
   
-  ![NeuralForge Banner](https://via.placeholder.com/1200x400/1e1e1e/00ff00?text=NeuralForge+-+Your+Local+AI+Pair+Programmer)
+  ![NeuralForge Banner](https://via.placeholder.com/1200x400/1e1e1e/00ff00?text=NeuralForge+-+Your+Local+AI+Vibe-Coder)
   
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
   [![GitHub Stars](https://img.shields.io/github/stars/ymcbzrgn/neuralforge?style=social)](https://github.com/ymcbzrgn/neuralforge)
-  [![Discord](https://img.shields.io/discord/XXXXXXXXXX?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/neuralforge)
-  [![Model Size](https://img.shields.io/badge/Model%20Size-1GB-green)](https://github.com/ymcbzrgn/neuralforge)
-  [![RAM Usage](https://img.shields.io/badge/RAM-3GB-brightgreen)](https://github.com/ymcbzrgn/neuralforge)
+  [![Model Size](https://img.shields.io/badge/Model%20Size-220MB-green)](https://github.com/ymcbzrgn/neuralforge)
+  [![RAM Usage](https://img.shields.io/badge/RAM-300MB-brightgreen)](https://github.com/ymcbzrgn/neuralforge)
   [![100% Local](https://img.shields.io/badge/Privacy-100%25%20Local-purple)](https://github.com/ymcbzrgn/neuralforge)
   
-  **The AI code editor that learns from YOU, not from you.**
+  **⚠️ Early Development Stage - Phase 1-2 Complete (Backend), Phase 3 Starting (IDE)**
   
-  [Download](#-quick-start) • [Features](#-features) • [Demo](#-demo) • [Docs](docs/) • [Contributing](#-contributing)
+  [Roadmap](ROADMAP.md) • [Architecture](ARCHITECTURE.md) • [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -23,25 +22,28 @@
 
 ## 🔥 Why NeuralForge?
 
-Tired of sending your code to the cloud? Frustrated with 12GB RAM requirements? Want an AI that actually learns YOUR coding style?
+Tired of sending your code to the cloud? Frustrated with 200MB+ RAM IDEs? Want an AI that actually learns YOUR coding style?
 
-**NeuralForge** is a revolutionary VS Code fork with embedded Small Language Models (SLMs) that:
-- 🧠 **Learns from every keystroke** - Gets smarter as you code
+**NeuralForge** is a lightweight Tauri-based IDE with embedded AI models that:
+- 🧠 **Learns from your code** - Adapts to your style over time
 - 🔒 **100% local** - Your code never leaves your machine
-- ⚡ **3GB RAM total** - While Cursor needs 12GB+
-- 🎯 **16K context window** - Understands entire files
-- 🆓 **Forever free** - No subscriptions, no limits
-- 🚀 **<50ms latency** - Faster than cloud solutions
+- ⚡ **~300MB RAM** - 75% less than Electron-based editors
+- 💬 **AI Chat with file manipulation** - Direct project changes from chat
+- 🆓 **Forever free** - No subscriptions, no API keys required (optional providers available)
+- 🚀 **<50ms inference** - Faster than cloud solutions
 
 ## 🎯 Key Characteristics
 
 | Feature | Description |
 |---------|------------|
-| **Local First** | All processing happens on your machine |
+| **Tauri-Based** | Native performance, 50MB binary vs 200MB Electron |
+| **Monaco Editor** | VS Code's editor component (standalone) |
+| **Local-First AI** | All processing happens on your machine |
 | **Privacy** | Your code never leaves your computer |
 | **Open Source** | Fully transparent and community-driven |
-| **No Subscriptions** | Free and always will be |
-| **Offline Ready** | Works without internet connection |
+| **Multi-Provider Chat** | Optional OpenAI/Claude/Gemini support |
+| **Learning System** | Adapts to your coding style automatically |
+| **RAG System** | Framework documentation at your fingertips |
 
 ## 🎬 Demo
 
@@ -53,107 +55,120 @@ Tired of sending your code to the cloud? Frustrated with 12GB RAM requirements? 
 
 </div>
 
-## ✨ Features
+## ✨ Features (v0.1.0 Target)
 
-### 🧠 **Intelligent Multi-Model System**
-```python
-# Three specialized models working in parallel
-models = {
-    "CodeT5+": "Fast completions",      # 770M params
-    "StableCode": "16K context",        # 3B params  
-    "StarCoder": "Complex generation"   # 15B params
-}
-# Automatic routing to best model for the task
-```
+### 🎨 **Modern IDE**
+- **Monaco Editor**: VS Code's editor component with syntax highlighting
+- **File Explorer**: Tree view with folder navigation
+- **Tab Management**: Multi-file editing with persistent state
+- **Themes**: Dark/Light modes with customization
 
-### 📈 **Continuous Learning**
-- Learns from every accepted/rejected completion
-- Adapts to your coding style in ~100 interactions
-- Project-specific pattern recognition
-- Git history analysis for context
+### 🤖 **AI Completion (Ghost Text)**
+- **Inline Suggestions**: Gray text preview as you type
+- **YOLO Mode**: Auto-accept completions (toggle on/off)
+- **Smart Debouncing**: 500ms delay, no request spam
+- **Tab/Esc Handling**: Accept or reject suggestions
 
-### 🎯 **Project DNA**
-Every project gets a unique AI model that:
-- Understands your codebase architecture
-- Follows your naming conventions
-- Maintains consistency across files
-- Learns from your commit history
+### � **AI Chat Panel**
+- **Project-Aware Chat**: Knows about your open files
+- **Multi-Provider Support**:
+  - **Local** (default, no API key)
+  - **OpenAI** (optional, GPT-4)
+  - **Claude** (optional, Claude 3.5 Sonnet)
+  - **Gemini** (optional, Gemini 1.5 Pro)
+  - **Custom Endpoints** (your own API)
+- **Code Actions**: Create/modify/delete files directly from chat
+- **Syntax Highlighting**: Code blocks with copy buttons
 
-### 🔄 **Adapter Marketplace**
-```bash
-# Download specialized adapters
-neuralforge pull adapter facebook/react-hooks
-neuralforge pull adapter google/microservices
+### 📚 **Learning System**
+- **Style Analyzer**: Detects your naming, formatting, comment style
+- **Pattern Recognition**: Learns libraries, test patterns, project structure
+- **Adaptive Suggestions**: AI output matches YOUR preferences
+- **Learning Dashboard**: See what the AI learned about your style
 
-# Share your fine-tuned adapters
-neuralforge push adapter my-team-style --public
-```
+### 🔍 **RAG System (Framework Docs)**
+- **Qdrant Vector DB**: Embedded, no external services
+- **Auto-Detection**: Finds Spring Boot, React, etc. from `pom.xml`/`package.json`
+- **Semantic Search**: "How to use @Transactional?" finds relevant docs
+- **Code Snippets**: Copy-paste ready examples from official docs
+
+### 🎯 **Vibe Coding**
+- **Context-Aware**: AI understands errors, cursor position, selection
+- **Multi-Step Tasks**: "Refactor this class to use dependency injection"
+- **Progress Tracking**: See AI's step-by-step execution plan
+- **Auto-Fix**: AI suggests fixes for compile errors
 
 ### ⚡ **Performance**
-- **Inference**: <50ms (faster than cloud)
-- **Startup**: <5 seconds
-- **Model switching**: <1 second
-- **RAM usage**: 3GB max (75% less than competitors)
-
-### 🛡️ **Privacy First**
-- Zero telemetry
-- No cloud dependencies
-- All processing local
-- Your code = Your property
+- **Startup**: <3 seconds (Tauri is fast!)
+- **Inference**: <50ms (Java backend, ONNX Runtime)
+- **RAM Usage**: ~300MB idle (75% less than Electron)
+- **Binary Size**: ~50MB (vs 200MB+ Electron apps)
 
 ## 🚀 Quick Start
 
-### Option 1: Download Pre-built (Recommended)
+### ⚠️ Not Yet Released
+NeuralForge is in **early development** (Phase 3 starting). Pre-built binaries will be available with v0.1.0.
+
+**Current Status:**
+- ✅ Phase 1-2: Java backend complete (86 tests passing)
+- 🔄 Phase 3: Tauri IDE development starting (see [ROADMAP.md](ROADMAP.md))
+
+### Build from Source (Developers Only)
+
+**Prerequisites:**
+- Node.js 18+ & npm
+- Rust 1.70+ (for Tauri)
+- Java 21+ & Gradle (for backend)
+- Python 3.10+ (for tokenizer)
+
 ```bash
-# Windows
-curl -L https://github.com/ymcbzrgn/neuralforge/releases/latest/download/neuralforge-win.exe -o neuralforge.exe
-./neuralforge.exe
-
-# macOS
-curl -L https://github.com/ymcbzrgn/neuralforge/releases/latest/download/neuralforge-mac.dmg -o neuralforge.dmg
-open neuralforge.dmg
-
-# Linux
-curl -L https://github.com/ymcbzrgn/neuralforge/releases/latest/download/neuralforge.AppImage -o neuralforge
-chmod +x neuralforge
-./neuralforge
-```
-
-### Option 2: Build from Source
-```bash
-# Clone the repository
+# Clone repository
 git clone https://github.com/ymcbzrgn/neuralforge.git
 cd neuralforge
 
-# Install dependencies
-npm install
-./gradlew build
+# Backend (already complete, just test it)
+cd backend
+./gradlew test  # Should show 86 tests passing
+cd ..
 
-# Download models (one-time, ~2GB)
-npm run download-models
+# Frontend (Phase 3 - under development)
+# TODO: Tauri project will be created in Sprint 1.1
+# cd neuralforge-ide
+# npm install
+# npm run tauri dev
+```
 
-# Launch
-npm run start
+**Download Models:**
+```bash
+cd models
+python download_model.py  # Downloads CodeT5+ 220M (~1GB)
 ```
 
 ## 💻 System Requirements
 
 ### Minimum
-- **OS**: Windows 10 / macOS 10.14 / Ubuntu 20.04
-- **RAM**: 4GB
-- **Storage**: 10GB
-- **CPU**: 2 cores @ 2.4GHz
+- **OS**: Windows 10 / macOS 11 / Ubuntu 20.04
+- **RAM**: 2GB (lightweight!)
+- **Storage**: 5GB (models + app)
+- **CPU**: 2 cores @ 2.0GHz
 - **GPU**: Not required
 
 ### Recommended
-- **RAM**: 8GB
-- **Storage**: 20GB  
-- **CPU**: 4 cores @ 3.0GHz
-- **GPU**: Optional (6GB VRAM for acceleration)
+- **RAM**: 4GB
+- **Storage**: 10GB  
+- **CPU**: 4 cores @ 2.5GHz
+- **GPU**: Optional (for faster inference, but not needed)
 
 ## 🗺️ Roadmap
 
-This is an early-stage project. The roadmap will be updated as development progresses. See [ARCHITECTURE.md](ARCHITECTURE.md) and [CONTRIBUTING.md](CONTRIBUTING.md) for current status.
+**Current Phase:** Phase 3 - Tauri IDE Development (6 weeks, 9 sprints)
+
+See detailed [ROADMAP.md](ROADMAP.md) for:
+- ✅ Phase 1-2: Backend Complete (86 tests passing)
+- 🔄 Phase 3: IDE Development (Sprint 1-9 detailed)
+- 📋 Sprint breakdown with tasks, files, tests
+
+**Next Milestone:** v0.1.0 (Tauri app + AI completion + chat + learning + RAG)
 
 ## 🤝 Contributing
 
@@ -189,11 +204,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## 📚 Documentation
 
-- [Installation Guide](docs/installation.md)
-- [Configuration](docs/configuration.md)
-- [Training Custom Adapters](docs/training.md)
-- [API Reference](docs/api.md)
-- [Architecture Overview](docs/architecture.md)
+- [ROADMAP.md](ROADMAP.md) - Development roadmap and current status
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture (Tauri + Java backend)
+- [NeuralForge_PRD.md](NeuralForge_PRD.md) - Product requirements and vision
+- [CONTRIBUTING.md](CONTRIBUTING.md) - How to contribute
+- [TRAINING.md](TRAINING.md) - LoRA adapter training guide
+- [SECURITY.md](SECURITY.md) - Security architecture and threat model
 
 ## 🏆 Community
 
@@ -250,20 +266,22 @@ If you find NeuralForge useful, consider:
 
 > "AI should amplify human creativity, not exploit it. Your code is your intellectual property. Your patterns are your expertise. Your privacy is non-negotiable."
 
-NeuralForge is built on three principles:
-1. **Privacy First** - Your code never leaves your machine
-2. **Community Driven** - Built by developers, for developers  
-3. **Continuous Learning** - Gets better with every line you write
+NeuralForge is built on five principles:
+1. **Privacy First** - Your code never leaves your machine (100% local by default)
+2. **Lightweight** - Fast startup, low RAM usage (Tauri beats Electron)
+3. **Community Driven** - Built by developers, for developers  
+4. **Continuous Learning** - Gets better with every line you write
+5. **Choice** - Optional cloud providers (OpenAI/Claude/Gemini) without forcing them
 
 ---
 
 <div align="center">
 
-### Ready to explore a local-first AI coding tool?
+### Ready to build the future of local-first AI coding?
 
-# [⬇️ Download NeuralForge Now](https://github.com/ymcbzrgn/neuralforge/releases)
+# [👷 Contribute to NeuralForge](CONTRIBUTING.md)
 
-**Free and Open Source • Local-First • Community-Driven**
+**⚠️ Pre-Alpha Development • Contributions Welcome • Phase 3 Starting**
 
 <br>
 
